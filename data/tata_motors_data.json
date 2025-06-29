@@ -1,0 +1,115 @@
+{
+    "company_info": {
+        "description": "Tata Motors Limited is India's largest automobile company, with consolidated revenues of INR 3,27,000 crores (USD 44 billion) in 2022-23. Through subsidiaries and associate companies, Tata Motors has operations in the UK, South Korea, Thailand, South Africa and Indonesia. Among them is Jaguar Land Rover, the business comprising the two iconic British brands.",
+        "last_updated": "2025-04-24"
+    },
+    "vehicles": {
+        "Passenger Vehicles": {
+            "Nexon": {
+                "category": "SUV",
+                "description": "The Tata Nexon is a subcompact SUV that combines style, performance, and safety features.",
+                "features": [
+                    "5-star Global NCAP safety rating",
+                    "1.2L Turbo Petrol & 1.5L Diesel engine options",
+                    "Connected car technology",
+                    "Sunroof option available",
+                    "Advanced driver assistance systems"
+                ],
+                "last_updated": "2025-04-24"
+            },
+            "Harrier": {
+                "category": "SUV",
+                "description": "The Tata Harrier is a premium SUV offering luxury, performance, and advanced features.",
+                "features": [
+                    "OMEGA Arc platform",
+                    "2.0L Kryotec Diesel engine",
+                    "ADAS features",
+                    "Panoramic sunroof",
+                    "Premium interiors"
+                ],
+                "last_updated": "2025-04-24"
+            },
+            "Safari": {
+                "category": "SUV",
+                "description": "The Tata Safari is a premium 7-seater SUV with commanding road presence.",
+                "features": [
+                    "7-seater configuration",
+                    "2.0L Kryotec Diesel engine",
+                    "Terrain response modes",
+                    "Premium captain seats",
+                    "Advanced safety features"
+                ],
+                "last_updated": "2025-04-24"
+            },
+            "Punch": {
+                "category": "SUV",
+                "description": "The Tata Punch is a micro SUV with full-sized safety features.",
+                "features": [
+                    "5-star Global NCAP safety rating",
+                    "1.2L Revotron Petrol engine",
+                    "High ground clearance",
+                    "Terrain management modes",
+                    "Modern design"
+                ],
+                "last_updated": "2025-04-24"
+            }
+        },
+        "Electric Vehicles": {
+            "Nexon EV": {
+                "category": "Electric SUV",
+                "description": "India's best-selling electric SUV with premium features and impressive range.",
+                "features": [
+                    "Up to 465 km range (ARAI)",
+                    "Fast charging capability",
+                    "Connected car technology",
+                    "Ventilated seats",
+                    "JBL audio system"
+                ],
+                "last_updated": "2025-04-24"
+            },
+            "Tiago EV": {
+                "category": "Electric Hatchback",
+                "description": "Most accessible electric hatchback with modern connected features.",
+                "features": [
+                    "250-315 km range",
+                    "DC fast charging",
+                    "ZConnect app with 45+ features",
+                    "Regenerative braking",
+                    "Eco-driving modes"
+                ],
+                "last_updated": "2025-04-24"
+            },
+            "Tigor EV": {
+                "category": "Electric Sedan",
+                "description": "Electric sedan combining zero emissions with practical functionality.",
+                "features": [
+                    "Up to 315 km range",
+                    "Connected car technology",
+                    "Digital instrument cluster",
+                    "Hill-start assist",
+                    "Cruise control"
+                ],
+                "last_updated": "2025-04-24"
+            }
+        }
+    },
+    "news": [
+        {
+            "title": "Tata Motors launches new variants",
+            "date": "2024-03-15",
+            "content": "Tata Motors introduces new variants with enhanced features and improved performance."
+        },
+        {
+            "title": "Electric vehicle expansion",
+            "date": "2024-03-10",
+            "content": "Tata Motors announces plans to expand its electric vehicle lineup with new models."
+        }
+    ],
+    "updates": [
+        {
+            "title": "Service center expansion",
+            "date": "2024-03-20",
+            "content": "Tata Motors expands service center network to improve customer support."
+        }
+    ]
+}
