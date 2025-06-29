@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-# from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from google.generativeai import GenerativeModel, configure
 import google.generativeai as genai
 import logging
 import os
+import pickle
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -21,7 +22,20 @@ CORS(app, origins=[
     "http://localhost:3000"   # Alternative local port
 ])
 
-# FAISS_PATH = "faiss_index"
+# FAISS Configuration
+FAISS_PATH = "faiss_index"
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
+# Load FAISS index if available
+vectorstore = None
+try:
+    if os.path.exists(FAISS_PATH):
+        vectorstore = FAISS.load_local(FAISS_PATH, embeddings)
+        logger.info("FAISS index loaded successfully")
+    else:
+        logger.warning("FAISS index not found, using fallback context")
+except Exception as e:
+    logger.error(f"Error loading FAISS index: {str(e)}")
 
 # Configure Google Gemini API
 GOOGLE_API_KEY = "AIzaSyCV3iu9BRwKMFZ1Y2FFLVgMXZFHg0Egozs"
@@ -65,16 +79,24 @@ Important guidelines:
 
 def query_database(query_text):
     try:
-        # Enhanced context with more Tata Motors information
-        context_text = """Tata Motors is India's largest automobile company, with consolidated revenues of INR 3,27,000 crores (USD 44 billion) in 2022-23. 
-        
-        Passenger Vehicles include:
-        - SUVs: Safari (7-seater premium SUV), Harrier (premium SUV), Nexon (subcompact SUV), Punch (micro SUV)
-        - Electric Vehicles: Nexon EV (best-selling electric SUV), Tiago EV (electric hatchback), Tigor EV (electric sedan)
-        - Hatchbacks: Tiago, Altroz
-        - Sedans: Tigor
-        
-        Key features: 5-star Global NCAP safety ratings, connected car technology, advanced driver assistance systems, premium interiors, and eco-friendly options."""
+        if vectorstore:
+            # Use FAISS for semantic search
+            logger.info("Using FAISS for semantic search")
+            docs = vectorstore.similarity_search(query_text, k=3)
+            context_text = "\n\n".join([doc.page_content for doc in docs])
+            logger.info(f"Found {len(docs)} relevant documents")
+        else:
+            # Fallback to enhanced context
+            logger.info("Using fallback context")
+            context_text = """Tata Motors is India's largest automobile company, with consolidated revenues of INR 3,27,000 crores (USD 44 billion) in 2022-23. 
+            
+            Passenger Vehicles include:
+            - SUVs: Safari (7-seater premium SUV), Harrier (premium SUV), Nexon (subcompact SUV), Punch (micro SUV)
+            - Electric Vehicles: Nexon EV (best-selling electric SUV), Tiago EV (electric hatchback), Tigor EV (electric sedan)
+            - Hatchbacks: Tiago, Altroz
+            - Sedans: Tigor
+            
+            Key features: 5-star Global NCAP safety ratings, connected car technology, advanced driver assistance systems, premium interiors, and eco-friendly options."""
         
         return get_response(context_text, query_text)
     except Exception as e:
@@ -101,7 +123,12 @@ def handle_query():
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for monitoring"""
-    return jsonify({'status': 'healthy', 'message': 'Tata Motors API is running'})
+    faiss_status = "loaded" if vectorstore else "not_loaded"
+    return jsonify({
+        'status': 'healthy', 
+        'message': 'Tata Motors API is running',
+        'faiss_index': faiss_status
+    })
 
 @app.route('/', methods=['GET'])
 def root():
@@ -112,6 +139,10 @@ def root():
         'endpoints': {
             'query': '/api/query',
             'health': '/health'
+        },
+        'features': {
+            'faiss_search': vectorstore is not None,
+            'ai_model': 'gemini-1.5-flash'
         }
     })
 
